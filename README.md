@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pragya Rajput: portfolio
 
-## Getting Started
+A one-page portfolio in a night-sky theme: a starry purple hero with a cut-out portrait, a "What I do" diagram, a centred experience timeline, selected projects, results from real work, skills and contact.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router) with React 19 and TypeScript
+- Tailwind CSS 4
+- Instrument Serif, Geist, Geist Mono and Caveat through `next/font`
+- Lenis for smooth scrolling (off when the visitor prefers reduced motion)
+
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run lint
+npm run build && npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where things live
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Path | What it is |
+| --- | --- |
+| `src/data/profile.ts` | Content: experience, projects, skills, education, links. Edit this, not the components. |
+| `src/components/sections/` | One file per page section. |
+| `src/app/globals.css` | Theme tokens (colours, fonts) and shared styles: sky, stars, buttons, cards. |
+| `public/` | Resume PDF, the PostDrip screen recording and the hero portrait. |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Accessibility
 
-## Learn More
+- Every section works with the keyboard; the "What I do" circles are focusable and their text is also listed below the diagram.
+- Reduced motion: no smooth scroll, no twinkling stars, no entrance animation.
+- Decorative layers (sky, stars, glows) are hidden from screen readers.
 
-To learn more about Next.js, take a look at the following resources:
+## Deploying
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deployed on Vercel (no environment variables needed). `siteUrl` in `src/data/profile.ts` should match the live address so social previews resolve.

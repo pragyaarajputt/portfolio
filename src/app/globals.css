@@ -1,26 +1,341 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Night sky palette: near-black, deep purples, a sunset red and soft lavender text. */
+  --color-night: #06020b;
+  --color-surface: #0f0918;
+  --color-fg: #efe8f4;
+  --color-muted: #a99bb5;
+  --color-lavender: #d5c5dc;
+  --color-violet: #9b4dff;
+  --color-violet-deep: #5521a0;
+  --color-orchid: #a452a1;
+  --color-plum: #291153;
+  --color-wine: #602a3a;
+  --color-sunset: #a9403e;
+
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-hand: var(--font-caveat), cursive;
+
+  --breakpoint-xs: 30rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--color-night);
+  color: var(--color-fg);
+  color-scheme: dark;
+  scroll-padding-top: 6rem;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-night);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-violet);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-violet);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Serif display type; italic words carry the lavender accent. */
+.display,
+.heading {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+.display {
+  line-height: 1.02;
+}
+
+.heading {
+  line-height: 1.05;
+}
+
+.display em,
+.heading em {
+  font-style: italic;
+  color: var(--color-lavender);
+}
+
+.lead {
+  font-size: clamp(1.1rem, 1rem + 0.5vw, 1.3rem);
+  line-height: 1.65;
+}
+
+/* Small uppercase mono labels, as on buttons and names. */
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.script {
+  font-family: var(--font-hand);
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--color-violet);
+}
+
+.link-u {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgb(239 232 244 / 0.35);
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color 0.2s;
+}
+
+.link-u:hover {
+  text-decoration-color: currentColor;
+}
+
+/* Frosted dark surface for the nav and cards. */
+.glass {
+  background: rgb(20 12 32 / 0.6);
+  border: 1px solid rgb(255 255 255 / 0.12);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.06) inset, 0 20px 50px -25px rgb(0 0 0 / 0.8);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+}
+
+.card {
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.035), rgb(255 255 255 / 0.01));
+  border: 1px solid rgb(255 255 255 / 0.08);
+  border-radius: 1.25rem;
+}
+
+/* The glowing violet pill used for primary actions. */
+.btn-glow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.8rem 1.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(180deg, #b36bff, #7a2fe0);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.25) inset, 0 8px 30px -6px rgb(155 77 255 / 0.75);
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+
+.btn-glow:hover {
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.35) inset, 0 10px 40px -4px rgb(155 77 255 / 0.95);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.8rem 1.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-fg);
+  background: rgb(255 255 255 / 0.06);
+  border: 1px solid rgb(255 255 255 / 0.14);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-ghost:hover {
+  background: rgb(255 255 255 / 0.1);
+  border-color: rgb(255 255 255 / 0.3);
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  color: #fff;
+  background: rgb(155 77 255 / 0.3);
+  border: 1px solid rgb(200 160 255 / 0.5);
+  box-shadow: 0 6px 24px -8px rgb(155 77 255 / 0.8);
+  transition: background 0.2s;
+}
+
+.icon-btn:hover {
+  background: rgb(155 77 255 / 0.5);
+}
+
+.tag {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1a0a2e;
+  background: #b36bff;
+}
+
+.chip {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.22rem 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--color-lavender);
+  background: rgb(255 255 255 / 0.05);
+  border: 1px solid rgb(255 255 255 / 0.1);
+}
+
+/* The cinematic sky behind the hero: deep purple with a sunset glow and drifting stars. */
+.sky {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 45% at 18% 78%, rgb(169 64 62 / 0.55), transparent 70%),
+    radial-gradient(55% 40% at 85% 70%, rgb(164 82 161 / 0.55), transparent 70%),
+    radial-gradient(90% 55% at 50% 40%, rgb(85 33 160 / 0.75), transparent 75%),
+    linear-gradient(180deg, #0b0520 0%, #1c0c45 35%, #3a1678 62%, #2a0f45 82%, var(--color-night) 100%);
+}
+
+/* Long soft streaks, like wind-blown cloud. */
+.sky::before {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  background:
+    radial-gradient(40% 6% at 30% 55%, rgb(214 150 230 / 0.35), transparent 70%),
+    radial-gradient(45% 5% at 70% 48%, rgb(240 160 200 / 0.28), transparent 70%),
+    radial-gradient(35% 4% at 55% 64%, rgb(190 120 255 / 0.3), transparent 70%);
+  filter: blur(12px);
+  transform: rotate(-6deg);
+}
+
+.stars,
+.stars-2 {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+  animation: twinkle 6s ease-in-out infinite alternate;
+}
+
+.stars {
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, #fff, transparent),
+    radial-gradient(1px 1px at 120px 80px, rgb(255 255 255 / 0.8), transparent),
+    radial-gradient(1.5px 1.5px at 200px 150px, #fff, transparent),
+    radial-gradient(1px 1px at 260px 40px, rgb(255 255 255 / 0.7), transparent),
+    radial-gradient(1px 1px at 60px 210px, rgb(255 255 255 / 0.6), transparent);
+  background-size: 300px 260px;
+}
+
+.stars-2 {
+  background-image:
+    radial-gradient(2px 2px at 90px 120px, #fff, transparent),
+    radial-gradient(1px 1px at 310px 60px, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 400px 300px, rgb(255 255 255 / 0.85), transparent);
+  background-size: 470px 420px;
+  animation-delay: -3s;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.55; }
+  to { opacity: 1; }
+}
+
+/* A sunset glow band, used behind the contact section and project shots. */
+.sunset {
+  background:
+    radial-gradient(70% 90% at 20% 100%, rgb(222 110 70 / 0.65), transparent 70%),
+    radial-gradient(60% 80% at 85% 100%, rgb(164 82 161 / 0.7), transparent 70%),
+    linear-gradient(180deg, #1c0c45, #4a1a6e 55%, #7a2d5c);
+}
+
+/* Native <details>: hide the marker and turn the chevron when open. */
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] .chev {
+  transform: rotate(180deg);
+}
+
+.chev {
+  transition: transform 0.25s ease;
+}
+
+/* Live status marker. */
+.pulse {
+  position: relative;
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: #7ee0a5;
+}
+
+.pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: pulse 2.2s ease-out infinite;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); opacity: 0.6; }
+  to { transform: scale(2.8); opacity: 0; }
+}
+
+/* The one orchestrated moment: the greeting rises into place, then the rest follows. */
+.hero-line {
+  display: block;
+  animation: rise 1s cubic-bezier(0.2, 0.7, 0.1, 1) both;
+}
+
+.hero-line:nth-child(2) { animation-delay: 0.1s; }
+.hero-line:nth-child(3) { animation-delay: 0.2s; }
+
+.hero-rise {
+  animation: fade-up 0.8s 0.45s cubic-bezier(0.2, 0.7, 0.1, 1) both;
+}
+
+@keyframes rise {
+  from { transform: translateY(0.4em); opacity: 0; filter: blur(6px); }
+  to { transform: none; opacity: 1; filter: none; }
+}
+
+@keyframes fade-up {
+  from { transform: translateY(12px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse::after, .stars, .stars-2 { animation: none; }
+  .chev, .btn-glow { transition: none; }
+  .hero-line, .hero-rise { animation: none; }
+  html { scroll-behavior: auto; }
 }
